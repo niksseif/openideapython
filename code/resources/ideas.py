@@ -5,15 +5,17 @@ from models.ideas import IdeaModel
 
 
 parser = reqparse.RequestParser()
+
+parser.add_argument('users_id',
+type=int,
+required=True,
+help="Evry idea needs a users_id"
+)
+
 parser.add_argument('title',
 type=str,
 required=True,
 help="This field cannot be left blank!"
-)
-parser.add_argument('label',
-type=str,
-required=True,
-help="Every idea needs a label."
 )
 
 parser.add_argument('description',
@@ -21,24 +23,45 @@ type=str,
 required=False
 )
 
-parser.add_argument('users_id',
-type=int,
+parser.add_argument('image_url',
+                    type=str,
+                    required=False
+                    )
+
+parser.add_argument('label',
+type=str,
 required=True,
-help="ideas need users_id"
+help="Every idea needs a label."
 )
+
+
 
 
 # this is class of one idea
 class Idea(Resource):
 
     # @jwt_required
-    def get(self, users_id: int):
-        idea = IdeaModel.find_by_users_id(users_id)
+    def get(self,idea_id:int):
+        idea = IdeaModel.find_by_id(idea_id)
         print(idea,'<<<<idea')
         if idea:
             return idea.json(), 200
 
         return {'message': 'Ideas of the user not found'}, 404
+
+    #  add post to this class to be able to create an idea
+    def post(self,name):
+        if IdeaModel.find_by_name:
+            return {"message": "An idea with name '{}' already exist.".format(name)},400
+        
+        data =self.parser.parse_args()
+        idea = IdeaModel(name,**data)
+        
+        try:
+            idea.save_to_db
+        except:
+            return {"message": "An error occured while inserting the item"}
+
 
     @jwt_required
     def delete(self, idea_title):
@@ -60,31 +83,30 @@ class Idea(Resource):
         if idea:
             idea.title = data['title']
         else:
-            idea = ideaModel(title, **data)
+            idea = IdeaModel(title, **data)
 
         idea.save_to_db()
         return idea.json()
+    
 
+    
 
 class IdeaList(Resource):
 
     def get(self,users_id: int):
+        users_id = get_jwt_identity()
         user_id_Ideas = [idea.json() for idea in IdeaModel.find_by_users_id(users_id)]
-        return user_id_Ideas, 200
-
-        # label = IdeaModel.find_by_label(label)
-        # if label:
-        #     return label.json(), 200
-
+        if user_id_Ideas:
+            return {'ideas':user_id_Ideas}, 200
         return {'message': 'Ideas of the user not found'}, 404
 
 
-    @jwt_required
+    # @jwt_required
     def post(self):
         data = parser.parse_args()
         print(self)
         if IdeaModel.find_by_title(data.title):
-            return {'message': "An beer with beer_name '{}' already exists.".format(title)}, 400
+            return {'message': "An idea with idea_name '{}' already exists.".format(title)}, 400
         print(data)
 
         idea = IdeaModel(**data)

@@ -29,6 +29,14 @@ _register_parser.add_argument('email',
                           required=True,
                           help="This field cannot be blank."
                           )
+                        #   i needed to add this ideas for now to be able to register
+                        # i need to change this
+
+# _register_parser.add_argument('ideas',
+#                               type=str,
+#                               required=True,
+#                               help="This field cannot be blank."
+#                               )
 
 _login_parser = reqparse.RequestParser()
 _login_parser.add_argument('email',
@@ -96,7 +104,7 @@ class UserLogin(Resource):
         user = UserModel.find_by_email(data['email'])
         print(user)
         if user and bcrypt.checkpw(data['password'].encode('utf8'), user.hashedPassword.encode('utf8')):
-            # this is the identity function 
+            # this is the identity function
             access_token = create_access_token(identity=user.id, fresh=True)
             refresh_token = create_refresh_token(user.id)
             return {
