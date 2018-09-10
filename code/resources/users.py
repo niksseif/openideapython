@@ -11,7 +11,7 @@ from flask_jwt_extended import (
 )
 
 from blacklist import BLACKLIST
-from models.user import UserModel
+from models.users import UserModel
 
 _register_parser = reqparse.RequestParser()
 _register_parser.add_argument('name',
@@ -70,20 +70,38 @@ class UserRegister(Resource):
         return {"message": "User created successfully."}, 201
 
 
-    class UserLogin(Resource):
-        def post(self):
-        data = _login_parser.parse_args()
 
+
+class User(Resource):
+    @classmethod
+    def get(cls, user_id):
+        user = UserModel.find_by_id(user_id)
+        if not user:
+            return{'message': 'User not found'}, 404
+        return user.json()
+
+    @classmethod
+    def delete(cls, user_id):
+        user = UserModel.find_by_id(user_id)
+        if not user:
+            return {'message': 'User not found'},404
+        user.delete_from_db()
+        return {'message':'User was deleted'}
+
+
+
+class UserLogin(Resource):
+    def post(self):
+        data = _login_parser.parse_args()
         user = UserModel.find_by_email(data['email'])
         print(user)
         if user and bcrypt.checkpw(data['password'].encode('utf8'), user.hashedPassword.encode('utf8')):
-            token = create_access_token(identity=user.id, fresh=True)
+            # this is the identity function 
+            access_token = create_access_token(identity=user.id, fresh=True)
             refresh_token = create_refresh_token(user.id)
             return {
-                       'token': token,
+                       'access_token': access_token,
                        'refresh_token': refresh_token
                    }, 200
 
         return {"message": "Invalid Credentials!"}, 401
-
-
