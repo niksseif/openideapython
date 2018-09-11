@@ -45,7 +45,7 @@ jwt = JWTManager(app)
 
 @app.before_first_request
 def create_tables():
-        # db.drop_all()
+        db.drop_all()
         db.create_all()
         db.engine.execute(UserModel.__table__.insert(), users)
         db.engine.execute(IdeaModel.__table__.insert(), ideas)
@@ -63,10 +63,8 @@ def add_claims_to_jwt(identity):
 api.add_resource(UserRegister, '/register')
 api.add_resource(UserLogin,'/login')
 api.add_resource(User,'/user/<int:user_id>/ideas')
-# api.add_resource(IdeaModel, '/ideas/<int:ideas_id>')
-# api.add_resource(Idea,'/ideas/<int:users_id>')
-# api.add_resource(IdeaList, '/ideas')
-# api.add_resource(IdeaList, '/user/<int:user_id>/ideas')
+api.add_resource(IdeaList, '/ideas')
+
 
 
 

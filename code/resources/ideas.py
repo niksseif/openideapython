@@ -56,7 +56,7 @@ class Idea(Resource):
         
         data =self.parser.parse_args()
         idea = IdeaModel(name,**data)
-        
+
         try:
             idea.save_to_db
         except:
@@ -64,12 +64,12 @@ class Idea(Resource):
 
 
     @jwt_required
-    def delete(self, idea_title):
+    def delete(self, title):
         claims = get_jwt_claims()
         if not claims['is_admin']:
             return {'message': 'Admin privilege required.'}, 401
 
-        idea = IdeaModel.find_by_title(_title)
+        idea = IdeaModel.find_by_title(title)
         if idea:
             idea.delete_from_db()
             return {'message': 'Idea deleted.'}
@@ -92,24 +92,20 @@ class Idea(Resource):
     
 
 class IdeaList(Resource):
-
-    def get(self,users_id: int):
-        users_id = get_jwt_identity()
-        user_id_Ideas = [idea.json() for idea in IdeaModel.find_by_users_id(users_id)]
-        if user_id_Ideas:
-            return {'ideas':user_id_Ideas}, 200
-        return {'message': 'Ideas of the user not found'}, 404
-
+    def get(self):
+        ideas = [idea.json() for idea in IdeaModel.find_all()]
+        # print(ideas,"<<<<<ideas from resource file")
+        return ideas, 200
 
     # @jwt_required
     def post(self):
         data = parser.parse_args()
-        print(self)
+        print(self,"<<<self from post")
         if IdeaModel.find_by_title(data.title):
-            return {'message': "An idea with idea_name '{}' already exists.".format(title)}, 400
+            print(data.title,"<<<<<<")
+            return {'message': "An idea with idea_name '{}' already exists.".format(data.title)}, 400
         print(data)
-
-        idea = IdeaModel(**data)
+        idea = IdeaModel(**data) 
 
         try:
             idea.save_to_db()
