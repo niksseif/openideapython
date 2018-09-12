@@ -29,14 +29,7 @@ _register_parser.add_argument('email',
                           required=True,
                           help="This field cannot be blank."
                           )
-                        #   i needed to add this ideas for now to be able to register
-                        # i need to change this
-
-# _register_parser.add_argument('ideas',
-#                               type=str,
-#                               required=True,
-#                               help="This field cannot be blank."
-#                               )
+                        
 
 _login_parser = reqparse.RequestParser()
 _login_parser.add_argument('email',

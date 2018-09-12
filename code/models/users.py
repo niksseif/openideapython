@@ -13,6 +13,7 @@ class UserModel(db.Model):
     hashedPassword = db.Column(db.String(150))
     image_url = db.Column(db.String(150))
     ideas = db.relationship('IdeaModel',lazy='dynamic')
+    reviews = db.relationship('ReviewModel', lazy='dynamic')
     
    
     def __init__(self, name, email, hashedPassword,image_url= 'https://www.w3schools.com/howto/img_avatar2.png'):

@@ -7,21 +7,21 @@ from models.ideas import IdeaModel
 parser = reqparse.RequestParser()
 
 parser.add_argument('users_id',
-type=int,
-required=True,
-help="Evry idea needs a users_id"
-)
+                    type=int,
+                    required=True,
+                    help="Every idea needs a users_id"
+                    )
 
 parser.add_argument('title',
-type=str,
-required=True,
-help="This field cannot be left blank!"
-)
+                    type=str,
+                    required=True,
+                    help="This field cannot be left blank!"
+                    )
 
 parser.add_argument('description',
-type=str,
-required=False
-)
+                    type=str,
+                    required=False
+                    )
 
 parser.add_argument('image_url',
                     type=str,
@@ -29,12 +29,15 @@ parser.add_argument('image_url',
                     )
 
 parser.add_argument('label',
-type=str,
-required=True,
-help="Every idea needs a label."
-)
+                    type=str,
+                    required=True,
+                    help="Every idea needs a label."
+                    )
 
-
+# parser.add_argument('vote',
+#                     type=int,
+#                     required=False
+#                     )
 
 
 # this is class of one idea

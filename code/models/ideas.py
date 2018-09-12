@@ -1,14 +1,15 @@
 from db import db
 from seeds.ideas import ideas
-# from models.reviews import ReviewsModel
+
 from models.users import UserModel
+from models.reviews import ReviewModel
 
 
 
 
 
 class IdeaModel(db.Model):
-    __tablename__ = 'Ideas'
+    __tablename__ = 'ideas'
 
     id = db.Column(db.Integer, primary_key=True)
     users_id = db.Column(db.Integer, db.ForeignKey('users.id', ondelete='SET NULL'))
@@ -16,7 +17,9 @@ class IdeaModel(db.Model):
     description = db.Column(db.String(1000))
     image_url = db.Column(db.String(150))
     label = db.Column(db.String(250))
+    vote = db.Column(db.Integer)
     users = db.relationship('UserModel')
+    reviews = db.relationship('ReviewModel')
     
     def __init__(self, users_id, title, image_url, label, description='none'):
         self.users_id = self.users_id
@@ -24,6 +27,7 @@ class IdeaModel(db.Model):
         self.description = self.description
         self.image_url = self.image_url
         self.label = self.label
+        self.vote = self.vote
 
 
     def json(self):
@@ -32,8 +36,8 @@ class IdeaModel(db.Model):
                 'title': self.title,
                 'description': self.description,
                 'image_url': self.image_url,
-                'label':self.label
-
+                'label':self.label,
+                'vote': self.vote
             }
 
 
