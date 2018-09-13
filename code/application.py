@@ -28,19 +28,19 @@ from seeds.reviews import reviews
 
 
 
-app = Flask(__name__)
-CORS(app)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['PROPAGATE_EXCEPTIONS'] = True
-api = Api(app)
+application = Flask(__name__)
+CORS(application)
+application.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
+application.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+application.config['PROPAGATE_EXCEPTIONS'] = True
+api = Api(application)
 
 
 
-app.config['JWT_SECRET_KEY']= 'nikki' # we can also use app.secret like before, Flask-JWT-Extended can recognize both
-app.config['JWT_BLACKLIST_ENABLED'] = True  # enable blacklist feature
-app.config['JWT_BLACKLIST_TOKEN_CHECKS'] = ['access', 'refresh']  # allow blacklisting for access and refresh tokens
-jwt = JWTManager(app)
+application.config['JWT_SECRET_KEY']= 'nikki' # we can also use application.secret like before, Flask-JWT-Extended can recognize both
+application.config['JWT_BLACKLIST_ENABLED'] = True  # enable blacklist feature
+application.config['JWT_BLACKLIST_TOKEN_CHECKS'] = ['access', 'refresh']  # allow blacklisting for access and refresh tokens
+jwt = JWTManager(application)
 
 # `claims` are data we choose to attach to each jwt payload
 # and for each jwt protected endpoint, we can retrieve these claims via `get_jwt_claims()`
@@ -105,7 +105,7 @@ def revoked_token_callback():
 
 
 
-@app.before_first_request
+@application.before_first_request
 def create_tables():
         db.drop_all()
         db.create_all()
@@ -128,5 +128,5 @@ api.add_resource(Reviews, '/reviews') #route is for getting all the reviews for 
 
 if __name__ == '__main__':
     from db import db
-    db.init_app(app)
-    app.run(port=5000, debug=True)
+    db.init_app(application)
+    application.run(port=5000, debug=True)
