@@ -1,0 +1,6 @@
+{
+    "python.pythonPath": "${workspaceFolder}/venv/bin/python",
+    "files.autoSave": "onWindowChange",
+    "editor.fontSize": 14,
+    "editor.wordWrap": "on"
+}

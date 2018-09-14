@@ -1,4 +1,4 @@
-#!/Users/animals/Documents/github/openideapython/venv/bin/python
+#!/Users/animals/Documents/github/openideapython/code/venv/bin/python
 
 import sys
 import getopt
