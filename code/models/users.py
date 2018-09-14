@@ -13,13 +13,15 @@ class UserModel(db.Model):
     hashedPassword = db.Column(db.String(150))
     image_url = db.Column(db.String(150))
     ideas = db.relationship('IdeaModel',lazy='dynamic')
+    reviews = db.relationship('ReviewModel', lazy='dynamic')
     
    
-    def __init__(self, name, email, hashedPassword, image_url= 'https://www.w3schools.com/howto/img_avatar2.png'):
+    def __init__(self, name, email, hashedPassword,image_url= 'https://www.w3schools.com/howto/img_avatar2.png'):
         self.name = name
         self.email = email
         self.hashedPassword = hashedPassword
         self.image_url = image_url
+        
 
 # create json method to return in the url
     def json(self):
@@ -29,7 +31,7 @@ class UserModel(db.Model):
             'email':self.email,
             'hashedPassword':self.hashedPassword,
             'image_url':self.image_url,
-            'ideas':[ideas.json() for idea in self.ideas.all()]
+            'ideas': [idea.json() for idea in self.ideas.all()]
         }
 
     @classmethod
