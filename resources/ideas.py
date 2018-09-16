@@ -63,7 +63,7 @@ class Idea(Resource):
         try:
             idea.save_to_db
         except:
-            return {"message": "An error occured while inserting the item"}
+            return {"message": "An error occured while inserting the idea"}
 
 
     @jwt_required

@@ -30,8 +30,12 @@ from seeds.reviews import reviews
 
 app = Flask(__name__)
 CORS(app)
+<<<<<<< HEAD
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get(
     'DATABASE_URL', 'sqlite:///data.db')
+=======
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL','sqlite:///data.db')
+>>>>>>> 253d738e7c349e56e63f167f0965d84cf574d298
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['PROPAGATE_EXCEPTIONS'] = True
 api = Api(app)
@@ -104,8 +108,6 @@ def revoked_token_callback():
 # JWT configuration ends
 
 
-
-
 @app.before_first_request
 def create_tables():
         db.drop_all()
@@ -113,7 +115,8 @@ def create_tables():
         db.engine.execute(UserModel.__table__.insert(), users)
         db.engine.execute(IdeaModel.__table__.insert(), ideas)
         db.engine.execute(ReviewModel.__table__.insert(), reviews)
-        # db.engine.execute(TagsModel.__table__.insert(), tags)
+
+
 
 
 
@@ -122,7 +125,7 @@ api.add_resource(UserRegister, '/register')
 api.add_resource(UserLogin,'/login')
 api.add_resource(User,'/user/<int:user_id>/ideas')  #route is for getting/posting to the idea
 api.add_resource(IdeaList, '/ideas')
-api.add_resource(Idea, '/user/<int:user_id>/idea/<int:idea_id>') #route is for editting one idea of a user,put
+api.add_resource(Idea, '/idea') #route is for editting one idea of a user,put
 api.add_resource(Reviews, '/reviews') #route is for getting all the reviews for one idea, post to it and delete
 
 
