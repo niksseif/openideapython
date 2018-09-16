@@ -30,12 +30,7 @@ from seeds.reviews import reviews
 
 app = Flask(__name__)
 CORS(app)
-<<<<<<< HEAD
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get(
-    'DATABASE_URL', 'sqlite:///data.db')
-=======
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL','sqlite:///data.db')
->>>>>>> 253d738e7c349e56e63f167f0965d84cf574d298
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['PROPAGATE_EXCEPTIONS'] = True
 api = Api(app)
