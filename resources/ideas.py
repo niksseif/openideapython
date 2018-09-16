@@ -53,9 +53,9 @@ class Idea(Resource):
         return {'message': 'Ideas of the user not found'}, 404
 
     #  add post to this class to be able to create an idea
-    def post(self,users_id):
-        if IdeaModel.find_by_users_id:
-            return {"message": "An idea with name '{}' already exist.".format(users_id)},400
+    def post(self,name):
+        if IdeaModel.find_by_name:
+            return {"message": "An idea with name '{}' already exist.".format(name)},400
         
         data =self.parser.parse_args()
         idea = IdeaModel(name,**data)
