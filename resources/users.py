@@ -89,8 +89,6 @@ class User(Resource):
         user.delete_from_db()
         return {'message':'User was deleted'}
 
-
-
 class UserLogin(Resource):
     def post(self):
         data = _login_parser.parse_args()
@@ -103,6 +101,7 @@ class UserLogin(Resource):
             return {
                        'access_token': access_token,
                        'refresh_token': refresh_token
+
                    }, 200
 
         return {"message": "Invalid Credentials!"}, 401

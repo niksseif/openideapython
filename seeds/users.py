@@ -3,7 +3,7 @@ users = [
         'name': 'Alis',
         'email':'alis@wonderland.com',
         'image_url': "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDVhVGBuazB9bab2M-eH5weR_NFH9vqibisXZ7OdxFnvnB4ytR",
-        'hashed_password': '$2b$08$IfDQWzpC2Feke.tALtOElupO3NAIFI7OpJxFDxhmQkIuASTM.Mqyu'
+        'hashed_password': '$2b$08$IfDQWzpC2Feke.tALtOElupO3NAIFI7OpJxFDxhmQkIuASTM.Mqyu' 
     },
     { 
         'name': 'Nipun',
