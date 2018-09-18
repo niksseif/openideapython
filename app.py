@@ -97,13 +97,13 @@ def revoked_token_callback():
 # JWT configuration ends
 
 
-# # @app.before_first_request
-# def create_tables():
-#         db.drop_all()
-#         db.create_all()
-#         db.engine.execute(UserModel.__table__.insert(), users)
-#         db.engine.execute(IdeaModel.__table__.insert(), ideas)
-#         db.engine.execute(ReviewModel.__table__.insert(), reviews)
+@app.before_first_request
+def create_tables():
+        db.drop_all()
+        db.create_all()
+        db.engine.execute(UserModel.__table__.insert(), users)
+        db.engine.execute(IdeaModel.__table__.insert(), ideas)
+        db.engine.execute(ReviewModel.__table__.insert(), reviews)
 
 
 
@@ -113,16 +113,6 @@ api.add_resource(User,'/user/<int:user_id>/ideas')  #route is for getting/postin
 api.add_resource(IdeaList, '/ideas')
 api.add_resource(Idea, '/idea') #route is for editting one idea of a user,put
 api.add_resource(Reviews, '/reviews') #route is for getting all the reviews for one idea, post to it and delete
-
-# @app.before_first_request
-# def create_tables():
-#     print("Dropping, migrating, seeding")
-#     db.drop_all()
-#     db.create_all()
-#     db.engine.execute(UserModel.__table__.insert(), users)
-#     db.engine.execute(IdeaModel.__table__.insert(), ideas)
-#     db.engine.execute(ReviewModel.__table__.insert(), reviews)
-
 
 if __name__ == '__main__':
     from db import db
