@@ -4,8 +4,8 @@ from flask_restful import Api
 from flask_cors import CORS
 from flask import Flask, jsonify
 from flask_jwt_extended import JWTManager
-from db import db
 
+from db import db
 
 from models.users import UserModel
 from models.ideas import IdeaModel
@@ -30,12 +30,11 @@ from seeds.reviews import reviews
 
 app = Flask(__name__)
 CORS(app)
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL','sqlite:///data.db')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get(
+    'DATABASE_URL', 'postgresql://animals:postgres@localhost/openidea_py')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['PROPAGATE_EXCEPTIONS'] = True
 api = Api(app)
-
-
 
 app.config['JWT_SECRET_KEY']= 'nikki' # we can also use app.secret like before, Flask-JWT-Extended can recognize both
 app.config['JWT_BLACKLIST_ENABLED'] = True  # enable blacklist feature
@@ -103,13 +102,13 @@ def revoked_token_callback():
 # JWT configuration ends
 
 
-@app.before_first_request
-def create_tables():
-        db.drop_all()
-        db.create_all()
-        db.engine.execute(UserModel.__table__.insert(), users)
-        db.engine.execute(IdeaModel.__table__.insert(), ideas)
-        db.engine.execute(ReviewModel.__table__.insert(), reviews)
+# # @app.before_first_request
+# def create_tables():
+#         db.drop_all()
+#         db.create_all()
+#         db.engine.execute(UserModel.__table__.insert(), users)
+#         db.engine.execute(IdeaModel.__table__.insert(), ideas)
+#         db.engine.execute(ReviewModel.__table__.insert(), reviews)
 
 
 
@@ -123,6 +122,14 @@ api.add_resource(IdeaList, '/ideas')
 api.add_resource(Idea, '/idea') #route is for editting one idea of a user,put
 api.add_resource(Reviews, '/reviews') #route is for getting all the reviews for one idea, post to it and delete
 
+@app.before_first_request
+def create_tables():
+    print("Dropping, migrating, seeding")
+    db.drop_all()
+    db.create_all()
+    db.engine.execute(UserModel.__table__.insert(), users)
+    db.engine.execute(IdeaModel.__table__.insert(), ideas)
+    db.engine.execute(ReviewModel.__table__.insert(), reviews)
 
 
 if __name__ == '__main__':

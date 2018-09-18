@@ -66,7 +66,7 @@ ideas =[
         'vote':1
     },
     {
-        'users_id': 4,
+        'users_id': 3,
         'title':'Shelter on Mars',
         "description":'this is the design of a shelter on Marse',
         'image_url':'https://i.pinimg.com/564x/a0/45/cf/a045cf3d2a55055469c2dc2781ffd8f9.jpg',

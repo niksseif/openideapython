@@ -16,7 +16,7 @@ class UserModel(db.Model):
     reviews = db.relationship('ReviewModel', lazy='dynamic')
     
    
-    def __init__(self, name, email, hashedPassword,image_url= 'https://www.w3schools.com/howto/img_avatar2.png'):
+    def __init__(self, name, email, hashedPassword, image_url= 'https://www.w3schools.com/howto/img_avatar2.png'):
         self.name = name
         self.email = email
         self.hashedPassword = hashedPassword
