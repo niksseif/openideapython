@@ -15,5 +15,5 @@ def create_tables():
     db.create_all()
     db.engine.execute(UserModel.__table__.insert(), users)
     db.engine.execute(IdeaModel.__table__.insert(), ideas)
-    db.engine.execute(ReviewModel.__table__.insert(), reviews)
+    
    

@@ -19,7 +19,7 @@ class IdeaModel(db.Model):
     image_url = db.Column(db.String(150))
     label = db.Column(db.String(250))
     vote = db.Column(db.Integer)
-    # reviews = db.relationship('ReviewModel')
+   
     
     def __init__(self, vote, users_id, title, image_url, label, description='none'):
         self.users_id = users_id
