@@ -1,5 +1,5 @@
 import os
-from flask import Flask
+from flask import Flask, jsonify
 from flask_restful import Api
 from flask_cors import CORS
 from flask import Flask, jsonify
@@ -21,9 +21,6 @@ from seeds.users import users
 from seeds.ideas import ideas
 from seeds.tags import tags
 from seeds.reviews import reviews
-
-# please work
-
 
 
 
@@ -109,9 +106,6 @@ def revoked_token_callback():
 #         db.engine.execute(UserModel.__table__.insert(), users)
 #         db.engine.execute(IdeaModel.__table__.insert(), ideas)
 #         db.engine.execute(ReviewModel.__table__.insert(), reviews)
-
-
-
 
 
 
