@@ -5,8 +5,6 @@ from flask_cors import CORS
 from flask import Flask, jsonify
 from flask_jwt_extended import JWTManager
 
-from db import db
-
 from models.users import UserModel
 from models.ideas import IdeaModel
 from models.reviews import ReviewModel
