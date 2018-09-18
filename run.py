@@ -12,7 +12,6 @@ db.init_app(app)
 
 @app.before_first_request
 def create_tables():
-    db.drop_all()
     db.create_all()
     db.engine.execute(UserModel.__table__.insert(), users)
     db.engine.execute(IdeaModel.__table__.insert(), ideas)
